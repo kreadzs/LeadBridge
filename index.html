@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Bridge | Контакт-центр на аутсорсе</title>
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config (MacOS + Netflix style) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#E50914',
+                        bgMain: '#0B0B0F',
+                        bgSoft: '#121218',
+                        bgCard: '#18181F',
+                        borderSoft: 'rgba(255,255,255,0.08)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        :root {
+            --bg-main: #0B0B0F;
+            --bg-soft: #121218;
+            --bg-card: #18181F;
+            --accent: #E50914;
+            --glass: rgba(255,255,255,0.05);
+        }
+
+        body {
+            background: radial-gradient(circle at 20% -10%, rgba(229,9,20,0.15), transparent 40%), var(--bg-main);
+            font-family: 'Inter', sans-serif;
+            color: #EDEDED;
+        }
+
+        /* MacOS glass */
+        .glass {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* Netflix hover */
+        .netflix-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all .35s ease;
+        }
+
+        .netflix-card:hover {
+            transform: scale(1.04);
+            border-color: rgba(229,9,20,0.6);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+        }
+
+        .accent-glow {
+            box-shadow: 0 0 25px rgba(229,9,20,0.4);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #22c55e;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="fixed w-full z-50 py-6 px-6">
+    <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-3xl p-4">
+        <div class="text-xl font-extrabold tracking-tight uppercase">
+            Lead<span class="text-accent">Bridge</span>
+        </div>
+
+        <nav class="hidden md:flex gap-8 text-sm text-gray-400 font-medium">
+            <a href="#services" class="hover:text-white transition">Услуги</a>
+            <a href="#why" class="hover:text-white transition">Почему мы</a>
+            <a href="https://t.me/LB_CC_support" class="hover:text-white transition">Кейсы</a>
+        </nav>
+
+        <div class="flex items-center gap-6">
+            <div class="hidden sm:flex items-center gap-2 text-xs text-gray-400">
+                <span class="status-dot"></span> Online
+            </div>
+
+            <a href="https://t.me/LB_CC_support"
+               class="px-6 py-3 bg-accent text-white font-bold rounded-xl hover:opacity-90 transition accent-glow">
+                Обсудить проект
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-28">
+    <div data-aos="fade-up" class="max-w-4xl">
+        <h1 class="text-5xl md:text-8xl font-extrabold mb-8 tracking-tight">
+            Забираем рутину<br>
+            <span class="text-accent">Оставляем результат</span>
+        </h1>
+
+        <p class="text-lg md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto">
+            Полный аутсорс клиентского сервиса — от чатов до сложных телефонных продаж.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-5 justify-center">
+            <a href="https://t.me/LB_CC_support"
+               class="px-10 py-5 bg-accent text-white rounded-2xl font-bold text-lg hover:opacity-90 transition accent-glow">
+                Нанять команду
+            </a>
+
+            <div class="flex items-center px-6 py-5 rounded-2xl border border-white/10 bg-white/5">
+                <span class="text-sm text-gray-400">Быстрая консультация</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services -->
+<section id="services" class="py-28 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between mb-16 gap-6">
+            <div class="max-w-xl">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">Что мы делаем лучше других</h2>
+                <p class="text-gray-500">Строим систему продаж и поддержки, а не просто отвечаем клиентам.</p>
+            </div>
+
+            <div class="text-accent font-mono text-sm tracking-widest">[ SERVICES ]</div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+
+            <div class="p-8 rounded-3xl netflix-card" data-aos="fade-up">
+                <i data-lucide="heart-handshake" class="w-10 h-10 text-accent mb-8"></i>
+                <h3 class="text-2xl font-bold mb-4">Поддержка клиентов</h3>
+                <p class="text-gray-400">Полное погружение в продукт и тон общения бренда.</p>
+            </div>
+
+            <div class="p-8 rounded-3xl netflix-card" data-aos="fade-up" data-aos-delay="120">
+                <i data-lucide="message-square-more" class="w-10 h-10 text-accent mb-8"></i>
+                <h3 class="text-2xl font-bold mb-4">Чаты и мессенджеры</h3>
+                <p class="text-gray-400">Ответ клиенту до 60 секунд и конверсия в оплату.</p>
+            </div>
+
+            <div class="p-8 rounded-3xl netflix-card" data-aos="fade-up" data-aos-delay="240">
+                <i data-lucide="phone-forwarded" class="w-10 h-10 text-accent mb-8"></i>
+                <h3 class="text-2xl font-bold mb-4">Телефонные продажи</h3>
+                <p class="text-gray-400">Гибкие сценарии вместо роботизированных скриптов.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 border-t border-white/5 bg-black/30">
+    <div class="max-w-6xl mx-auto text-center px-6">
+        <h2 class="text-4xl md:text-6xl font-bold mb-10">
+            Готовы повысить  <span class="text-accent">эффективность </span>?
+        </h2>
+
+        <a href="https://t.me/LB_CC_support"
+           class="inline-flex items-center gap-3 text-2xl font-bold text-accent hover:opacity-80 transition">
+            Связаться сейчас
+            <i data-lucide="arrow-up-right"></i>
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 text-center text-gray-600 text-sm">
+    © 2026 Lead Bridge
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+    lucide.createIcons();
+    AOS.init({ duration: 900, once: true });
+</script>
+
+</body>
+</html>
