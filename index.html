@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lead Bridge | Контакт-центр на аутсорсе</title>
-
+    <title>Lead Bridge | Контакт-центр на аутсорсі</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -17,10 +16,7 @@
                 extend: {
                     colors: {
                         accent: '#E50914',
-                        bgMain: '#0B0B0F',
-                        bgSoft: '#121218',
-                        bgCard: '#18181F',
-                        borderSoft: 'rgba(255,255,255,0.08)'
+                        gold: '#D4AF37'
                     }
                 }
             }
@@ -29,174 +25,219 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; transition: background 0.5s ease, color 0.5s ease; overflow-x: hidden; }
 
-        :root {
-            --bg-main: #0B0B0F;
-            --bg-soft: #121218;
-            --bg-card: #18181F;
-            --accent: #E50914;
-            --glass: rgba(255,255,255,0.05);
+        /* THEMES */
+        body.theme-dark { background: radial-gradient(circle at 20% -10%, rgba(229,9,20,0.15), transparent 40%), #0B0B0F; color: #EDEDED; }
+        body.theme-light { background: #F9FAFB; color: #111; }
+        body.theme-gold { background: #0B0B0F; color: #F5E6C8; }
+        body.theme-gold .text-accent { color: #D4AF37; }
+        body.theme-gold .bg-accent { background-color: #D4AF37; }
+
+        /* GLASS & CARDS */
+        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+        body.theme-light .glass { background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.08); }
+        
+        .card { 
+            background: rgba(255,255,255,0.02); 
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        body.theme-light .card { background: white; border: 1px solid rgba(0,0,0,0.05); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-color: rgba(229,9,20,0.3); }
 
-        body {
-            background: radial-gradient(circle at 20% -10%, rgba(229,9,20,0.15), transparent 40%), var(--bg-main);
-            font-family: 'Inter', sans-serif;
-            color: #EDEDED;
-        }
-
-  
-        .glass {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-
-
-        .netflix-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: all .35s ease;
-        }
-
-        .netflix-card:hover {
-            transform: scale(1.04);
-            border-color: rgba(229,9,20,0.6);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-        }
-
-        .accent-glow {
-            box-shadow: 0 0 25px rgba(229,9,20,0.4);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #22c55e;
-            border-radius: 50%;
-            box-shadow: 0 0 12px #22c55e;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        /* ANIMATIONS */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body>
 
+<body class="theme-dark">
 
-<header class="fixed w-full z-50 py-6 px-6">
-    <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-3xl p-4">
-        <div class="text-xl font-extrabold tracking-tight uppercase">
+<header class="fixed w-full z-50 py-4 px-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-2xl p-3 md:p-4">
+        <div class="text-xl md:text-2xl font-extrabold tracking-tighter uppercase ml-2">
             Lead<span class="text-accent">Bridge</span>
         </div>
 
-        <nav class="hidden md:flex gap-8 text-sm text-gray-400 font-medium">
-            <a href="#services" class="hover:text-white transition">Услуги</a>
-            <a href="#why" class="hover:text-white transition">Почему мы</a>
-            <a href="https://t.me/LB_CC_support" class="hover:text-white transition">Кейсы</a>
+        <nav class="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-wider opacity-70">
+            <a href="#services" class="hover:text-accent transition-colors">Послуги</a>
+            <a href="#stats" class="hover:text-accent transition-colors">Цифри</a>
+            <a href="#why" class="hover:text-accent transition-colors">Кейси</a>
         </nav>
 
-        <div class="flex items-center gap-6">
-            <div class="hidden sm:flex items-center gap-2 text-xs text-gray-400">
-                <span class="status-dot"></span> Online
+        <div class="flex items-center gap-3">
+            <div class="hidden lg:flex bg-black/20 rounded-lg p-1 border border-white/5">
+                <button onclick="setTheme('dark')" class="p-1.5 hover:bg-white/10 rounded-md transition-all"><i data-lucide="moon" class="w-4 h-4"></i></button>
+                <button onclick="setTheme('light')" class="p-1.5 hover:bg-white/10 rounded-md transition-all"><i data-lucide="sun" class="w-4 h-4"></i></button>
+                <button onclick="setTheme('gold')" class="p-1.5 hover:bg-white/10 rounded-md transition-all"><i data-lucide="crown" class="w-4 h-4 text-gold"></i></button>
             </div>
-
-            <a href="https://t.me/LB_CC_support"
-               class="px-6 py-3 bg-accent text-white font-bold rounded-xl hover:opacity-90 transition accent-glow">
-                Обсудить проект
+            <a href="https://t.me/LB_CC_support" class="px-5 py-2.5 bg-accent text-white font-bold rounded-xl text-sm hover:scale-105 active:scale-95 transition-all shadow-lg shadow-accent/20">
+                Контакт
             </a>
         </div>
     </div>
 </header>
 
-
-<section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-28">
-    <div data-aos="fade-up" class="max-w-4xl">
-        <h1 class="text-5xl md:text-8xl font-extrabold mb-8 tracking-tight">
-            Забираем рутину<br>
-            <span class="text-accent">Оставляем результат</span>
+<section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+    <div class="reveal">
+        <span class="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent text-xs font-bold uppercase tracking-widest mb-6 border border-accent/20">
+            BPO & Sales Solutions
+        </span>
+        <h1 class="text-5xl md:text-8xl font-extrabold mb-8 tracking-tight leading-[0.9]">
+            Забираємо рутину<br>
+            <span class="text-accent">Даємо результат</span>
         </h1>
-
-        <p class="text-lg md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Полный аутсорс клиентского сервиса — от чатов до сложных телефонных продаж.
+        <p class="text-lg md:text-2xl opacity-60 mb-12 max-w-2xl mx-auto font-medium">
+            Масштабуємо ваші продажі та клієнтський сервіс, поки ви фокусуєтесь на стратегії.
         </p>
+        <div id="lead-form"></div>
+    </div>
+</section>
 
-        <div class="flex flex-col sm:flex-row gap-5 justify-center">
-            <a href="https://t.me/LB_CC_support"
-               class="px-10 py-5 bg-accent text-white rounded-2xl font-bold text-lg hover:opacity-90 transition accent-glow">
-                Нанять команду
-            </a>
-
-            <div class="flex items-center px-6 py-5 rounded-2xl border border-white/10 bg-white/5">
-                <span class="text-sm text-gray-400">Быстрая консультация</span>
-            </div>
+<section id="stats" class="py-20 px-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center reveal">
+            <div class="text-4xl md:text-5xl font-black text-accent mb-2">98%</div>
+            <p class="text-sm uppercase tracking-widest opacity-50">CSAT Score</p>
+        </div>
+        <div class="text-center reveal" style="transition-delay: 0.1s">
+            <div class="text-4xl md:text-5xl font-black text-accent mb-2">60с</div>
+            <p class="text-sm uppercase tracking-widest opacity-50">Швидкість відповіді</p>
+        </div>
+        <div class="text-center reveal" style="transition-delay: 0.2s">
+            <div class="text-4xl md:text-5xl font-black text-accent mb-2">24/7</div>
+            <p class="text-sm uppercase tracking-widest opacity-50">Графік роботи</p>
+        </div>
+        <div class="text-center reveal" style="transition-delay: 0.3s">
+            <div class="text-4xl md:text-5xl font-black text-accent mb-2">15+</div>
+            <p class="text-sm uppercase tracking-widest opacity-50">Ніш бізнесу</p>
         </div>
     </div>
 </section>
 
-
-<section id="services" class="py-28 px-6">
+<section id="services" class="py-28 px-6 bg-white/5">
     <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row justify-between mb-16 gap-6">
-            <div class="max-w-xl">
-                <h2 class="text-3xl md:text-5xl font-bold mb-6">Что мы делаем лучше других</h2>
-                <p class="text-gray-500">Строим систему продаж и поддержки, а не просто отвечаем клиентам.</p>
-            </div>
-
-            <div class="text-accent font-mono text-sm tracking-widest">[ SERVICES ]</div>
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <h2 class="text-4xl md:text-6xl font-bold reveal">Наші<br><span class="opacity-40">послуги</span></h2>
+            <p class="max-w-xs opacity-50 text-sm reveal">Ми не просто відповідаємо на дзвінки - ми будуємо лояльність та закриваємо угоди.</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6">
-
-            <div class="p-8 rounded-3xl netflix-card" data-aos="fade-up">
-                <i data-lucide="heart-handshake" class="w-10 h-10 text-accent mb-8"></i>
-                <h3 class="text-2xl font-bold mb-4">Поддержка клиентов</h3>
-                <p class="text-gray-400">Полное погружение в продукт и тон общения бренда.</p>
+        <div class="grid md:grid-cols-4 gap-6">
+            <div class="p-8 rounded-[2rem] card reveal">
+                <div class="w-12 h-12 bg-accent/10 flex items-center justify-center rounded-2xl mb-8">
+                    <i data-lucide="headset" class="text-accent"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Підтримка</h3>
+                <p class="opacity-60 text-sm leading-relaxed">Повне занурення у продукт. Клієнти навіть не зрозуміють, що це аутсорс.</p>
             </div>
 
-            <div class="p-8 rounded-3xl netflix-card" data-aos="fade-up" data-aos-delay="120">
-                <i data-lucide="message-square-more" class="w-10 h-10 text-accent mb-8"></i>
-                <h3 class="text-2xl font-bold mb-4">Чаты и мессенджеры</h3>
-                <p class="text-gray-400">Ответ клиенту до 60 секунд и конверсия в оплату.</p>
+            <div class="p-8 rounded-[2rem] card reveal" style="transition-delay: 0.1s">
+                <div class="w-12 h-12 bg-accent/10 flex items-center justify-center rounded-2xl mb-8">
+                    <i data-lucide="message-circle" class="text-accent"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Месенджери</h3>
+                <p class="opacity-60 text-sm leading-relaxed">Продажі в Telegram, WhatsApp, Instagram. Швидко, влучно, з високим чек-аутом.</p>
             </div>
 
-            <div class="p-8 rounded-3xl netflix-card" data-aos="fade-up" data-aos-delay="240">
-                <i data-lucide="phone-forwarded" class="w-10 h-10 text-accent mb-8"></i>
-                <h3 class="text-2xl font-bold mb-4">Телефонные продажи</h3>
-                <p class="text-gray-400">Гибкие сценарии вместо роботизированных скриптов.</p>
+            <div class="p-8 rounded-[2rem] card reveal" style="transition-delay: 0.2s">
+                <div class="w-12 h-12 bg-accent/10 flex items-center justify-center rounded-2xl mb-8">
+                    <i data-lucide="trending-up" class="text-accent"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Продажі</h3>
+                <p class="opacity-60 text-sm leading-relaxed">Холодні та теплі дзвінки. Опрацювання заперечень та дотискання лідів.</p>
             </div>
 
+            <div class="p-8 rounded-[2rem] card reveal" style="transition-delay: 0.3s">
+                <div class="w-12 h-12 bg-accent/10 flex items-center justify-center rounded-2xl mb-8">
+                    <i data-lucide="search-code" class="text-accent"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Рекрутинг</h3>
+                <p class="opacity-60 text-sm leading-relaxed">Знайдемо та навчимо ідеальних фахівців саме під вашу специфіку.</p>
+            </div>
         </div>
     </div>
 </section>
 
-
-<section class="py-24 border-t border-white/5 bg-black/30">
-    <div class="max-w-6xl mx-auto text-center px-6">
-        <h2 class="text-4xl md:text-6xl font-bold mb-10">
-            Готовы повысить  <span class="text-accent">эффективность </span>?
+<section id="why" class="py-32 px-6 text-center">
+    <div class="max-w-4xl mx-auto glass p-12 md:p-24 rounded-[3rem] reveal">
+        <h2 class="text-4xl md:text-6xl font-bold mb-8">
+            Готові до <span class="text-accent italic">масштабування</span>?
         </h2>
-
-        <a href="https://t.me/LB_CC_support"
-           class="inline-flex items-center gap-3 text-2xl font-bold text-accent hover:opacity-80 transition">
-            Связаться сейчас
-            <i data-lucide="arrow-up-right"></i>
+        <p class="text-xl opacity-60 mb-12">Залиште заявку на безкоштовний аудит вашої поточної системи комунікацій.</p>
+        <a href="https://t.me/LB_CC_support" class="group inline-flex items-center gap-4 text-2xl font-bold hover:text-accent transition-all">
+            Обговорити проєкт 
+            <i data-lucide="arrow-up-right" class="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
         </a>
     </div>
 </section>
 
-
-<footer class="py-10 text-center text-gray-600 text-sm">
-    © 2026 Lead Bridge
+<footer class="py-12 border-t border-white/5 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 opacity-40 text-xs uppercase tracking-widest">
+        <div>© 2026 Lead Bridge. All rights reserved.</div>
+        <div class="flex gap-8">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+    </div>
 </footer>
 
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-    lucide.createIcons();
-    AOS.init({ duration: 900, once: true });
+// REACT FORM WITH VALIDATION
+const e = React.createElement;
+function LeadForm(){
+    const [input, setInput] = React.useState('');
+    const [sent, setSent] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+
+    const handleSubmit = () => {
+        if(input.length < 5) return alert('Введіть коректні дані');
+        setLoading(true);
+        setTimeout(() => {
+            setSent(true);
+            setLoading(false);
+        }, 1200);
+    };
+
+    if(sent) return e('div',{className:'flex items-center gap-2 text-green-500 font-bold text-xl animate-bounce'},[
+        e('span', null, 'Менеджер вже поспішає до вас!'),
+        e('i', {'data-lucide': 'check-circle', className: 'w-6 h-6'})
+    ]);
+
+    return e('div',{className:'flex flex-col md:flex-row gap-3 w-full max-w-md mx-auto'},[
+        e('input',{
+            className:'flex-1 px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:border-accent transition-all',
+            placeholder:'Telegram або Номер',
+            value: input,
+            onChange: (el) => setInput(el.target.value)
+        }),
+        e('button',{
+            className:`px-8 py-4 bg-accent rounded-2xl text-white font-bold transition-all ${loading ? 'opacity-50' : 'hover:shadow-lg hover:shadow-accent/40'}`,
+            onClick: handleSubmit,
+            disabled: loading
+        }, loading ? 'Надсилаємо...' : 'Почати')
+    ]);
+}
+ReactDOM.createRoot(document.getElementById('lead-form')).render(e(LeadForm));
+
+// THEME CONTROL
+function setTheme(theme){
+    document.body.className = 'theme-' + theme;
+    localStorage.setItem('lb-theme', theme);
+}
+
+// REVEAL ANIMATION
+const observerOptions = { threshold: 0.1 };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ICON INIT
+lucide.createIcons();
 </script>
 
 </body>
