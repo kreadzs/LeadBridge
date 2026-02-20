@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lead Bridge | Контакт-центр на аутсорсі</title>
-
+    <title>Lead Bridge | Глобальний аутсорсинг комунікацій</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        accent: '#E50914',
-                        gold: '#D4AF37'
+                        brand: {
+                            deep: '#05070a',
+                            accent: '#6366f1', // Electric Indigo
+                            soft: '#a5b4fc',
+                            glass: 'rgba(255, 255, 255, 0.03)'
+                        }
                     }
                 }
             }
@@ -24,221 +25,324 @@
     </script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-        body { font-family: 'Inter', sans-serif; transition: background 0.5s ease, color 0.5s ease; overflow-x: hidden; }
-
-        /* THEMES */
-        body.theme-dark { background: radial-gradient(circle at 20% -10%, rgba(229,9,20,0.15), transparent 40%), #0B0B0F; color: #EDEDED; }
-        body.theme-light { background: #F9FAFB; color: #111; }
-        body.theme-gold { background: #0B0B0F; color: #F5E6C8; }
-        body.theme-gold .text-accent { color: #D4AF37; }
-        body.theme-gold .bg-accent { background-color: #D4AF37; }
-
-        /* GLASS & CARDS */
-        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
-        body.theme-light .glass { background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.08); }
-        
-        .card { 
-            background: rgba(255,255,255,0.02); 
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        :root {
+            --bg: #05070a;
+            --accent: #6366f1;
+            --card-bg: rgba(255, 255, 255, 0.03);
         }
-        body.theme-light .card { background: white; border: 1px solid rgba(0,0,0,0.05); }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-color: rgba(229,9,20,0.3); }
+        body { 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: #e2e8f0; /* Более мягкий белый для глаз */
+        }
+        
+        .glass { 
+            background: var(--card-bg); 
+            backdrop-filter: blur(16px); 
+            border: 1px solid rgba(255,255,255,0.05); 
+        }
+        
+        /* Burger Animation */
+        .burger-active .line1 { transform: translateY(7px) rotate(45deg); background-color: #000; }
+        .burger-active .line2 { opacity: 0; }
+        .burger-active .line3 { transform: translateY(-7px) rotate(-45deg); background-color: #000; }
 
-        /* ANIMATIONS */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        #full-menu {
+            clip-path: circle(0% at 95% 5%);
+            transition: clip-path 0.7s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        #full-menu.active { clip-path: circle(150% at 95% 5%); }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #fff 0%, #6366f1 50%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal-visible { opacity: 1; transform: translateY(0); }
+
+        /* Custom glow for main button */
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+        }
     </style>
 </head>
+<body class="antialiased">
 
-<body class="theme-dark">
-
-<header class="fixed w-full z-50 py-4 px-4">
-    <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-2xl p-3 md:p-4">
-        <div class="text-xl md:text-2xl font-extrabold tracking-tighter uppercase ml-2">
-            Lead<span class="text-accent">Bridge</span>
+    <header class="fixed top-0 w-full z-[100] px-6 md:px-12 py-6 flex justify-between items-center transition-all duration-500" id="main-header">
+        <div class="flex items-center gap-3 group cursor-pointer">
+            <div class="w-11 h-11 bg-brand-accent rounded-xl flex items-center justify-center group-hover:rotate-[15deg] transition-all duration-300 shadow-xl shadow-indigo-600/20">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/></svg>
+            </div>
+            <span class="font-black text-2xl tracking-tighter uppercase text-white">Lead Bridge</span>
         </div>
 
-        <nav class="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-wider opacity-70">
-            <a href="#services" class="hover:text-accent transition-colors">Послуги</a>
-            <a href="#stats" class="hover:text-accent transition-colors">Цифри</a>
-            <a href="#why" class="hover:text-accent transition-colors">Кейси</a>
+        <button id="menu-btn" class="relative z-[110] w-14 h-14 flex flex-col items-center justify-center gap-1.5 bg-white text-black rounded-full shadow-2xl hover:scale-105 active:scale-90 transition-all">
+            <span class="line1 w-6 h-0.5 bg-black transition-all"></span>
+            <span class="line2 w-6 h-0.5 bg-black transition-all"></span>
+            <span class="line3 w-6 h-0.5 bg-black transition-all"></span>
+        </button>
+    </header>
+
+    <div id="full-menu" class="fixed inset-0 bg-brand-accent z-[105] flex flex-col items-center justify-center">
+        <nav class="flex flex-col gap-6 text-center">
+            <a href="#services" class="menu-link text-5xl md:text-8xl font-black text-white hover:text-black transition-colors duration-300">ПОСЛУГИ</a>
+            <a href="#partners" class="menu-link text-5xl md:text-8xl font-black text-white hover:text-black transition-colors duration-300">ПАРТНЕРИ</a>
+            <a href="#reviews" class="menu-link text-5xl md:text-8xl font-black text-white hover:text-black transition-colors duration-300">ВІДГУКИ</a>
+            <a href="https://t.me/LB_CC_support" class="menu-link text-5xl md:text-8xl font-black text-indigo-900 mt-4 underline">CONTACT</a>
         </nav>
+    </div>
 
-        <div class="flex items-center gap-3">
-            <div class="hidden lg:flex bg-black/20 rounded-lg p-1 border border-white/5">
-                <button onclick="setTheme('dark')" class="p-1.5 hover:bg-white/10 rounded-md transition-all"><i data-lucide="moon" class="w-4 h-4"></i></button>
-                <button onclick="setTheme('light')" class="p-1.5 hover:bg-white/10 rounded-md transition-all"><i data-lucide="sun" class="w-4 h-4"></i></button>
-                <button onclick="setTheme('gold')" class="p-1.5 hover:bg-white/10 rounded-md transition-all"><i data-lucide="crown" class="w-4 h-4 text-gold"></i></button>
+    <section class="min-h-screen flex flex-col justify-center px-6 md:px-20 pt-20 relative overflow-hidden">
+        <div class="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-brand-accent/10 rounded-full blur-[140px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 -right-20 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[100px]"></div>
+        
+        <div class="max-w-5xl z-10">
+            <div class="inline-block px-4 py-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/10 text-brand-soft text-[10px] font-black tracking-[0.2em] uppercase mb-8">
+                Future of BPO • 2026
             </div>
-            <a href="https://t.me/LB_CC_support" class="px-5 py-2.5 bg-accent text-white font-bold rounded-xl text-sm hover:scale-105 active:scale-95 transition-all shadow-lg shadow-accent/20">
-                Контакт
-            </a>
-        </div>
-    </div>
-</header>
-
-<section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
-    <div class="reveal">
-        <span class="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent text-xs font-bold uppercase tracking-widest mb-6 border border-accent/20">
-            BPO & Sales Solutions
-        </span>
-        <h1 class="text-5xl md:text-8xl font-extrabold mb-8 tracking-tight leading-[0.9]">
-            Забираємо рутину<br>
-            <span class="text-accent">Даємо результат</span>
-        </h1>
-        <p class="text-lg md:text-2xl opacity-60 mb-12 max-w-2xl mx-auto font-medium">
-            Масштабуємо ваші продажі та клієнтський сервіс, поки ви фокусуєтесь на стратегії.
-        </p>
-        <div id="lead-form"></div>
-    </div>
-</section>
-
-<section id="stats" class="py-20 px-6">
-    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-        <div class="text-center reveal">
-            <div class="text-4xl md:text-5xl font-black text-accent mb-2">98%</div>
-            <p class="text-sm uppercase tracking-widest opacity-50">CSAT Score</p>
-        </div>
-        <div class="text-center reveal" style="transition-delay: 0.1s">
-            <div class="text-4xl md:text-5xl font-black text-accent mb-2">60с</div>
-            <p class="text-sm uppercase tracking-widest opacity-50">Швидкість відповіді</p>
-        </div>
-        <div class="text-center reveal" style="transition-delay: 0.2s">
-            <div class="text-4xl md:text-5xl font-black text-accent mb-2">24/7</div>
-            <p class="text-sm uppercase tracking-widest opacity-50">Графік роботи</p>
-        </div>
-        <div class="text-center reveal" style="transition-delay: 0.3s">
-            <div class="text-4xl md:text-5xl font-black text-accent mb-2">15+</div>
-            <p class="text-sm uppercase tracking-widest opacity-50">Ніш бізнесу</p>
-        </div>
-    </div>
-</section>
-
-<section id="services" class="py-28 px-6 bg-white/5">
-    <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-            <h2 class="text-4xl md:text-6xl font-bold reveal">Наші<br><span class="opacity-40">послуги</span></h2>
-            <p class="max-w-xs opacity-50 text-sm reveal">Ми не просто відповідаємо на дзвінки - ми будуємо лояльність та закриваємо угоди.</p>
-        </div>
-
-        <div class="grid md:grid-cols-4 gap-6">
-            <div class="p-8 rounded-[2rem] card reveal">
-                <div class="w-12 h-12 bg-accent/10 flex items-center justify-center rounded-2xl mb-8">
-                    <i data-lucide="headset" class="text-accent"></i>
+            <h1 class="text-6xl md:text-[10rem] font-black leading-[0.8] tracking-tighter mb-12">
+                DRIVING <br> <span class="text-gradient">REVENUE</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mb-12 leading-relaxed font-light">
+                Ми не просто контакт-центр. Ми — ваш стратегічний партнер в масштабуванні продажів та створенні ідеального клієнтського досвіду.
+            </p>
+            
+            <div class="flex flex-wrap gap-8 items-center">
+                <button class="btn-glow px-10 py-6 bg-brand-accent hover:bg-indigo-500 text-white rounded-2xl font-bold transition-all shadow-2xl shadow-indigo-600/30 active:scale-95">
+                    Обговорити проект
+                </button>
+                <div class="flex gap-4 items-center">
+                    <div class="w-12 h-[1px] bg-indigo-500/50"></div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black text-white">24/7/365</span>
+                        <span class="text-indigo-400/60 text-[10px] uppercase tracking-widest font-bold">Операційна готовність</span>
+                    </div>
                 </div>
-                <h3 class="text-xl font-bold mb-4">Підтримка</h3>
-                <p class="opacity-60 text-sm leading-relaxed">Повне занурення у продукт. Клієнти навіть не зрозуміють, що це аутсорс.</p>
-            </div>
-
-            <div class="p-8 rounded-[2rem] card reveal" style="transition-delay: 0.1s">
-                <div class="w-12 h-12 bg-accent/10 flex items-center justify-center rounded-2xl mb-8">
-                    <i data-lucide="message-circle" class="text-accent"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-4">Месенджери</h3>
-                <p class="opacity-60 text-sm leading-relaxed">Продажі в Telegram, WhatsApp, Instagram. Швидко, влучно, з високим чек-аутом.</p>
-            </div>
-
-            <div class="p-8 rounded-[2rem] card reveal" style="transition-delay: 0.2s">
-                <div class="w-12 h-12 bg-accent/10 flex items-center justify-center rounded-2xl mb-8">
-                    <i data-lucide="trending-up" class="text-accent"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-4">Продажі</h3>
-                <p class="opacity-60 text-sm leading-relaxed">Холодні та теплі дзвінки. Опрацювання заперечень та дотискання лідів.</p>
-            </div>
-
-            <div class="p-8 rounded-[2rem] card reveal" style="transition-delay: 0.3s">
-                <div class="w-12 h-12 bg-accent/10 flex items-center justify-center rounded-2xl mb-8">
-                    <i data-lucide="search-code" class="text-accent"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-4">Рекрутинг</h3>
-                <p class="opacity-60 text-sm leading-relaxed">Знайдемо та навчимо ідеальних фахівців саме під вашу специфіку.</p>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="why" class="py-32 px-6 text-center">
-    <div class="max-w-4xl mx-auto glass p-12 md:p-24 rounded-[3rem] reveal">
-        <h2 class="text-4xl md:text-6xl font-bold mb-8">
-            Готові до <span class="text-accent italic">масштабування</span>?
-        </h2>
-        <p class="text-xl opacity-60 mb-12">Залиште заявку на безкоштовний аудит вашої поточної системи комунікацій.</p>
-        <a href="https://t.me/LB_CC_support" class="group inline-flex items-center gap-4 text-2xl font-bold hover:text-accent transition-all">
-            Обговорити проєкт 
-            <i data-lucide="arrow-up-right" class="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-        </a>
-    </div>
-</section>
-
-<footer class="py-12 border-t border-white/5 px-6">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 opacity-40 text-xs uppercase tracking-widest">
-        <div>© 2026 Lead Bridge. All rights reserved.</div>
-        <div class="flex gap-8">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+    <section id="partners" class="py-20 border-y border-white/5 bg-white/[0.02]">
+        <div class="container mx-auto px-6">
+            <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.5em] mb-16 text-center">Нам довіряють лідери ринку</p>
+            <div class="flex flex-wrap justify-center items-center gap-10 md:gap-24 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+                <span class="text-2xl font-bold tracking-tighter italic">FINTECH.UA</span>
+                <span class="text-2xl font-bold tracking-tighter">E-COMMERCE Solutions</span>
+                <span class="text-2xl font-bold tracking-tighter border-b-2 border-indigo-500">GALAXY MEDIA</span>
+                <span class="text-2xl font-bold tracking-tighter">SOLAR systems</span>
+                <span class="text-2xl font-bold tracking-tighter">CRYPTO Flow</span>
+            </div>
         </div>
-    </div>
-</footer>
+    </section>
 
-<script>
-// REACT FORM WITH VALIDATION
-const e = React.createElement;
-function LeadForm(){
-    const [input, setInput] = React.useState('');
-    const [sent, setSent] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
+    <section id="services" class="py-32 px-6 md:px-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
+            <div>
+                <h2 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-white">ПОВНИЙ <br>ЦИКЛ</h2>
+                <p class="text-slate-400 text-lg mb-12 max-w-md font-light">Ми адаптуємо процеси під специфіку вашої ніші, забезпечуючи безшовну інтеграцію ваших продуктів у нашу систему.</p>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="glass p-8 rounded-3xl border-indigo-500/10">
+                        <span class="text-brand-accent font-black text-2xl block mb-4">01</span>
+                        <h4 class="font-bold text-white uppercase tracking-widest text-sm">E-commerce</h4>
+                    </div>
+                    <div class="glass p-8 rounded-3xl border-indigo-500/10">
+                        <span class="text-brand-accent font-black text-2xl block mb-4">02</span>
+                        <h4 class="font-bold text-white uppercase tracking-widest text-sm">SaaS & IT</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-8">
+                <div class="glass p-10 rounded-[40px] scroll-reveal group hover:bg-white transition-all duration-500 cursor-pointer">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-black group-hover:text-black">Вхідна лінія</h3>
+                        <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-black/10 group-hover:rotate-45 transition-all">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="group-hover:text-black"><path d="M7 17L17 7M17 7H7M17 7V17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 group-hover:text-slate-600 mb-8 font-light">Професійна підтримка клієнтів у всіх каналах: Live-chat, Telegram, Viber, Email.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <span class="text-[10px] font-black px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 uppercase">Answer Rate > 95%</span>
+                        <span class="text-[10px] font-black px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 uppercase">24/7 Support</span>
+                    </div>
+                </div>
 
-    const handleSubmit = () => {
-        if(input.length < 5) return alert('Введіть коректні дані');
-        setLoading(true);
-        setTimeout(() => {
-            setSent(true);
-            setLoading(false);
-        }, 1200);
-    };
+                <div class="glass p-10 rounded-[40px] scroll-reveal group hover:bg-white transition-all duration-500 cursor-pointer">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-black group-hover:text-black">Sales Outsource</h3>
+                        <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-black/10 group-hover:rotate-45 transition-all">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="group-hover:text-black"><path d="M7 17L17 7M17 7H7M17 7V17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 group-hover:text-slate-600 mb-8 font-light">Закриваємо угоди, обробляємо заперечення та ведемо клієнта по воронці до оплати.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <span class="text-[10px] font-black px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 uppercase">Up-sell & Cross-sell</span>
+                        <span class="text-[10px] font-black px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 uppercase">CRM Integration</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    if(sent) return e('div',{className:'flex items-center gap-2 text-green-500 font-bold text-xl animate-bounce'},[
-        e('span', null, 'Менеджер вже поспішає до вас!'),
-        e('i', {'data-lucide': 'check-circle', className: 'w-6 h-6'})
-    ]);
+    <section class="py-24 bg-brand-accent relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 30px 30px;"></div>
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center relative z-10">
+            <div>
+                <div class="text-6xl font-black mb-2 text-white counter" data-target="1500000">0</div>
+                <p class="text-indigo-200 text-[10px] font-black uppercase tracking-widest">Дзвінків / рік</p>
+            </div>
+            <div>
+                <div class="text-6xl font-black mb-2 text-white counter" data-target="98">0</div>
+                <p class="text-indigo-200 text-[10px] font-black uppercase tracking-widest">% Задоволених</p>
+            </div>
+            <div>
+                <div class="text-6xl font-black mb-2 text-white counter" data-target="12">0</div>
+                <p class="text-indigo-200 text-[10px] font-black uppercase tracking-widest">Країн присутності</p>
+            </div>
+            <div>
+                <div class="text-6xl font-black mb-2 text-white counter" data-target="7">0</div>
+                <p class="text-indigo-200 text-[10px] font-black uppercase tracking-widest">Днів до запуску</p>
+            </div>
+        </div>
+    </section>
 
-    return e('div',{className:'flex flex-col md:flex-row gap-3 w-full max-w-md mx-auto'},[
-        e('input',{
-            className:'flex-1 px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:border-accent transition-all',
-            placeholder:'Telegram або Номер',
-            value: input,
-            onChange: (el) => setInput(el.target.value)
-        }),
-        e('button',{
-            className:`px-8 py-4 bg-accent rounded-2xl text-white font-bold transition-all ${loading ? 'opacity-50' : 'hover:shadow-lg hover:shadow-accent/40'}`,
-            onClick: handleSubmit,
-            disabled: loading
-        }, loading ? 'Надсилаємо...' : 'Почати')
-    ]);
-}
-ReactDOM.createRoot(document.getElementById('lead-form')).render(e(LeadForm));
+    <section id="reviews" class="py-32 px-6 md:px-20 bg-[#080a0f]">
+        <h2 class="text-4xl md:text-6xl font-black mb-20 tracking-tighter text-center text-white italic underline decoration-indigo-500 decoration-8 underline-offset-[12px]">VOICES OF SUCCESS</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass p-12 rounded-[50px] border-white/5 flex flex-col justify-between hover:border-indigo-500/30 transition-all">
+                <p class="text-xl font-light leading-relaxed mb-12 text-slate-300">"Lead Bridge допомогли нам масштабувати підтримку в 4 рази. Якість зросла, а витрати зменшились."</p>
+                <div class="flex items-center gap-5">
+                    <div class="w-14 h-14 bg-indigo-500/20 rounded-2xl border border-indigo-500/20"></div>
+                    <div>
+                        <h4 class="font-bold text-white">Олександр В.</h4>
+                        <p class="text-[10px] text-indigo-400 font-black uppercase tracking-widest">CEO, TechStore UA</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass p-12 rounded-[50px] border-indigo-500/30 flex flex-col justify-between scale-105 bg-white/[0.05]">
+                <p class="text-xl font-light leading-relaxed mb-12 text-slate-300">"Професійний підхід до скриптів. Менеджери продають краще, ніж наш внутрішній відділ. Справжні звірі!"</p>
+                <div class="flex items-center gap-5">
+                    <div class="w-14 h-14 bg-indigo-500 rounded-2xl border border-indigo-500/20"></div>
+                    <div>
+                        <h4 class="font-bold text-white">Марія К.</h4>
+                        <p class="text-[10px] text-indigo-400 font-black uppercase tracking-widest">Founder, CosmoCare</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass p-12 rounded-[50px] border-white/5 flex flex-col justify-between hover:border-indigo-500/30 transition-all">
+                <p class="text-xl font-light leading-relaxed mb-12 text-slate-300">"Дуже задоволений інтеграцією. Ми бачимо кожну дію оператора, прозорість на вищому рівні."</p>
+                <div class="flex items-center gap-5">
+                    <div class="w-14 h-14 bg-purple-500/20 rounded-2xl border border-purple-500/20"></div>
+                    <div>
+                        <h4 class="font-bold text-white">Дмитро П.</h4>
+                        <p class="text-[10px] text-indigo-400 font-black uppercase tracking-widest">Ops, FoodDrop</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-// THEME CONTROL
-function setTheme(theme){
-    document.body.className = 'theme-' + theme;
-    localStorage.setItem('lb-theme', theme);
-}
+    <footer class="py-24 px-6 md:px-20 border-t border-white/5 bg-brand-deep">
+        <div class="flex flex-col lg:flex-row justify-between items-start gap-16">
+            <div class="max-w-xl">
+                <h2 class="text-6xl md:text-8xl font-black mb-10 text-white tracking-tighter">ГОТОВІ ДО <br><span class="text-brand-accent italic">РОСТУ?</span></h2>
+                <a href="https://t.me/LB_CC_Support" class="text-3xl font-light hover:text-brand-accent transition-all flex items-center gap-4">
+                    Напишіть нам у Telegram 
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-16">
+                <div class="space-y-6">
+                    <h5 class="font-black text-[10px] uppercase tracking-[0.3em] text-indigo-500">Navigation</h5>
+                    <ul class="space-y-4 text-slate-400 font-medium">
+                        <li><a href="#services" class="hover:text-white transition-colors">Послуги</a></li>
+                        <li><a href="#partners" class="hover:text-white transition-colors">Партнери</a></li>
+                        <li><a href="#reviews" class="hover:text-white transition-colors">Відгуки</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-6">
+                    <h5 class="font-black text-[10px] uppercase tracking-[0.3em] text-indigo-500">Office</h5>
+                    <p class="text-slate-400 font-medium">Kyiv, Ukraine<br>Unit City, B12</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-24 pt-10 border-t border-white/5 text-[10px] text-slate-600 font-black uppercase tracking-[0.4em] flex flex-col md:flex-row justify-between gap-4">
+            <span>© 2026 Lead Bridge. All rights reserved.</span>
+            <span class="text-slate-500">Based in Digital Future</span>
+        </div>
+    </footer>
 
-// REVEAL ANIMATION
-const observerOptions = { threshold: 0.1 };
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('active');
-    });
-}, observerOptions);
+    <script>
+        // Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const fullMenu = document.getElementById('full-menu');
+        const menuLinks = document.querySelectorAll('.menu-link');
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('burger-active');
+            fullMenu.classList.toggle('active');
+            document.body.classList.toggle('overflow-hidden');
+        });
 
-// ICON INIT
-lucide.createIcons();
-</script>
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('burger-active');
+                fullMenu.classList.remove('active');
+                document.body.classList.remove('overflow-hidden');
+            });
+        });
 
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('glass', 'py-4');
+                header.classList.remove('py-6');
+            } else {
+                header.classList.remove('glass', 'py-4');
+                header.classList.add('py-6');
+            }
+        });
+
+        // Scroll Reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
+
+        // Stats Counter
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.getAttribute('data-target'));
+                    let current = 0;
+                    const duration = 2000; // 2 seconds
+                    const stepTime = 30;
+                    const steps = duration / stepTime;
+                    const increment = target / steps;
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            entry.target.innerText = target.toLocaleString() + (target > 50 ? '+' : '');
+                            clearInterval(timer);
+                        } else {
+                            entry.target.innerText = Math.floor(current).toLocaleString();
+                        }
+                    }, stepTime);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+    </script>
 </body>
 </html>
